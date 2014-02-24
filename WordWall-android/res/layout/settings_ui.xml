@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="settings_UI"
+    android:title="@string/settings_UI_title" >
+
+        <Preference
+            android:key="data_source"
+            android:summary="@string/database_summary"
+            android:title="@string/database"
+            android:persistent="true"
+            android:defaultValue="/sdcard/anymemo/french-body-parts.db"/>
+
+</PreferenceScreen>

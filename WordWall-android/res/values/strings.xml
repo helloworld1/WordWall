@@ -1,4 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WordWall</string>
+    <string name="button_install_anymemo">Install AnyMemo</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="clone_text">Clone</string>    
+    <string name="data_source">Data source</string>
+    <string name="database">Database</string>
+    <string name="database_summary">The database where to get cards</string>
+    <string name="delete_text">Delete</string>
+    <string name="fail">Failed</string>    
+    <string name="fb_create_db">Create new DB</string>
+    <string name="fb_create_dir">Create new folder</string>
+    <string name="fb_create_db_message">Please enter the name of new database.</string>
+    <string name="fb_create_dir_message">Please enter the name of new folder.</string>
+    <string name="fb_delete_message">Are you sure to delete this file?</string>
+    <string name="fb_edit_dialog_title">Edit</string>
+    <string name="fb_fail_to_clone">Failure cloning the file.</string>
+    <string name="fb_rename">Rename</string>
+    <string name="fb_rename_message">Please enter the name below.</string>
+    <string name="fb_rename_fail">Fail to rename.</string>
+    <string name="link_anymemo_free">market://details?id=org.liberty.android.fantastischmemo</string>
+    <string name="msg_install_anymemo">AnyMemo 10.3 or higher not found. Please install from Google Play.</string>
+    <string name="ok_text">OK</string>
+    <string name="rename_text">Rename</string>
+    <string name="settings_UI_title">WordWall setting</string>
+    <string name="title_install_anymemo">AnyMemo not found</string>
 </resources>

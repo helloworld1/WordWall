@@ -18,6 +18,8 @@ public class WordScreen implements Screen {
 
     private Actor backgroundActor;
 
+    private WordMarqueeActor wordMarqueeActor;
+
     public WordScreen(WordWall game) {
         this.game = game;
 
@@ -27,11 +29,10 @@ public class WordScreen implements Screen {
         backgroundTexture= new Texture(Gdx.files.internal("images/art001.jpg"));
         backgroundActor = new BackgroundActor(backgroundTexture, game.viewportWidth, game.viewportHeight);
 
-        Label label = new Label("Hello 你好", game.skin, "big_white_label");
-        label.setX(100);
-        label.setY(100);
+        wordMarqueeActor = new WordMarqueeActor(this.game, 700);
+
         stage.addActor(backgroundActor);
-        stage.addActor(label);
+        stage.addActor(wordMarqueeActor);
 
         Gdx.input.setInputProcessor(stage);
     }
