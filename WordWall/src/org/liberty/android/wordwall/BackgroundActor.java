@@ -9,11 +9,11 @@ public class BackgroundActor extends Actor {
 
     private Sprite backgroundSprite;
 
-    public BackgroundActor(Texture starFieldTexture, float viewportWidth, float viewportHeight) {
+    public BackgroundActor(WordWall game) {
         // Bigger stars and scrolls faster
-        backgroundSprite = new Sprite(starFieldTexture);
+        backgroundSprite = new Sprite(game.assetManager.get("images/background.etc1", Texture.class), 512, 910);
 
-        backgroundSprite.setSize(viewportWidth, viewportHeight);
+        backgroundSprite.setSize(game.viewportWidth, game.viewportHeight);
     }
 
     @Override

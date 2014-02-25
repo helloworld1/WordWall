@@ -13,13 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
 public class SkinGenerator {
 
-    private Texture fontImageTexture;
-
     private TextureRegion fontImageTextureRegion;
 
-    public SkinGenerator(Texture fontImageTexture) {
-        fontImageTextureRegion = new TextureRegion(fontImageTexture);
+    public SkinGenerator(WordWall game) {
+        fontImageTextureRegion = new TextureRegion(game.assetManager.get("fonts/dsf.png", Texture.class));
     }
+
     public Skin getSkin() {
         Skin skin = new Skin();
 
@@ -73,6 +72,11 @@ public class SkinGenerator {
         medOrangeLabelStyle.font = defaultMediumFont;
         medOrangeLabelStyle.fontColor = Color.ORANGE;
         skin.add("med_orange_label", medOrangeLabelStyle);
+
+        LabelStyle medWhiteLabelStyle = new LabelStyle();
+        medWhiteLabelStyle.font = defaultMediumFont;
+        medWhiteLabelStyle.fontColor = Color.WHITE;
+        skin.add("med_white_label", medWhiteLabelStyle);
         return skin;
     }
 
