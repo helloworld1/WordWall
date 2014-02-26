@@ -11,6 +11,6 @@ public class Main {
 		cfg.width = 480;
 		cfg.height = 800;
 		
-		new LwjglApplication(new WordWall(), cfg);
+		new LwjglApplication(new WordWall(new TutorialCardResolver()), cfg);
 	}
 }

@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.liberty.android.wordwall.Card;
 
-public interface ContentAdapter {
+public interface CardResolver {
     List<Card> getCards();
-
-    String getSource();
 }

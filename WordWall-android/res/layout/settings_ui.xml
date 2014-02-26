@@ -4,7 +4,7 @@
     android:title="@string/settings_UI_title" >
 
         <Preference
-            android:key="data_source"
+            android:key="dbName"
             android:summary="@string/database_summary"
             android:title="@string/database"
             android:persistent="true"

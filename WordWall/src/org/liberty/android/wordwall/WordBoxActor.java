@@ -16,10 +16,10 @@ public class WordBoxActor extends Group {
 
     public WordBoxActor(WordWall game) {
         this.game = game;
-        this.setX(game.viewportWidth * 0.118f);
-        this.setY(game.viewportHeight * 0.118f);
-        this.setWidth(game.viewportWidth * 0.618f);
-        this.setHeight(game.viewportHeight * 0.618f);
+        this.setX(game.viewportWidth * 0.1f);
+        this.setY(game.viewportHeight * 0.3f);
+        this.setWidth(game.viewportWidth * 0.8f);
+        this.setHeight(game.viewportHeight * 0.7f);
         initTable();
     }
 
@@ -31,18 +31,23 @@ public class WordBoxActor extends Group {
     public void initTable() {
         table = new Table();
         table.setFillParent(true);
+        table.center();
 
-        titleLabel = new Label("Hello", game.skin, "big_white_label");
-        definitionLabel = new Label("22222222222 jdsfof osdfjasd iosdjf", game.skin, "med_white_label");
+        titleLabel = new Label("", game.skin, "big_white_label");
+        titleLabel.setWrap(true);
+        definitionLabel = new Label("", game.skin, "med_white_label");
         definitionLabel.setWrap(true);
-        table.row().padBottom(25);
-        table.add(titleLabel).width(getWidth()).center();
-        table.row().maxHeight(getHeight() - 25 - titleLabel.getHeight());
-        table.add(definitionLabel).width(getWidth()).center();
+        table.row().width(getWidth()).center().maxHeight(100).padBottom(25);
+        table.add(titleLabel);
+        table.row().width(getWidth()).center().maxHeight(675);
+        table.add(definitionLabel);
         this.addActor(table);
     }
 
-
+    public void setCardToDisplay(Card card) {
+        titleLabel.setText(card.getQuestion());
+        definitionLabel.setText(card.getAnswer());
+    }
 }
 
 

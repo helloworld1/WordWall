@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.liberty.android.wordwall.Card;
-import org.liberty.android.wordwall.ContentAdapter;
+import org.liberty.android.wordwall.CardResolver;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -18,7 +18,7 @@ import android.util.Log;
  * @author zxy1256@gmail.com
  * 
  */
-public class AnyMemoProviderAdapter implements ContentAdapter {
+public class AnyMemoCardResolver implements CardResolver {
     private static String AUTHROITY = "org.liberty.android.fantastischmemo.cardprovider";
     private static String TAG = "AnyMemoProviderAdapter";
 
@@ -33,20 +33,9 @@ public class AnyMemoProviderAdapter implements ContentAdapter {
      * @param dbPath
      * @throws Exception
      */
-    public AnyMemoProviderAdapter(Context context, String dbPath) {
+    public AnyMemoCardResolver(Context context, String dbPath) {
         mContext = context;
         this.dbPath = dbPath;
-
-        // Check existence of AnyMemo and the DB pointed by dbPath.
-        String dbProviderUri = "content://org.liberty.android.fantastischmemo.databasesprovider";
-        String cardProviderUri = "content://" + AUTHROITY + "/"
-                + Uri.encode(dbPath) + "/random/50";
-        if (null == dbPath || dbPath.isEmpty()
-                || !contentProviderExist(dbProviderUri)
-                || !contentProviderExist(cardProviderUri)) {
-            Log.e(TAG, "AnyMemo not available");
-            throw new IllegalArgumentException("AnyMemo not available");
-        }
     }
 
     @Override
@@ -75,11 +64,6 @@ public class AnyMemoProviderAdapter implements ContentAdapter {
             Log.e(TAG, "Error when loading cards.");
         }
         return cards;
-    }
-
-    @Override
-    public String getSource() {
-        return dbPath;
     }
 
     private boolean contentProviderExist(String uriString) {

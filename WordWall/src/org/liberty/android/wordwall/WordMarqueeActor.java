@@ -1,5 +1,10 @@
 package org.liberty.android.wordwall;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -12,12 +17,27 @@ public class WordMarqueeActor extends Group {
 
     private Label textLabel;
 
+    private Card currentCard;
+
     private float y;
+
+    private Queue<Card> cardQueue = new LinkedList<Card>();
+
+    // When the resolver changed clear the queue so next time,
+    // it will use the new resolver to chagne card
+    private OnCardResolverChangedListener onCardResolverChangedListener = new OnCardResolverChangedListener() {
+        @Override
+        public void onResolverchanged(CardResolver resolver) {
+            cardQueue.clear();
+        }
+    };
+
 
     public WordMarqueeActor(WordWall game, float y) {
         this.y = y;
         this.game = game;
         initNewLabel();
+        this.game.registerOnCardResolverChangedListener(onCardResolverChangedListener);
     }
 
     public void act(float delta) {
@@ -30,12 +50,32 @@ public class WordMarqueeActor extends Group {
         }
     }
 
+    public Card getCurrentCard() {
+        return currentCard;
+    }
+
+    public Card getNextCard() {
+        if (cardQueue.isEmpty()) {
+            List<Card> cards = game.cardResolver.getCards();
+            Collections.shuffle(cards);
+            cardQueue.addAll(cards);
+        }
+
+        currentCard = cardQueue.poll();
+        return currentCard;
+    }
+
     private boolean isLabelOutOfBound() {
         return (textLabel.getX() + textLabel.getWidth() < 0);
     }
 
     private void initNewLabel() {
-        textLabel = new Label("Hello 12312634812647812647812", game.skin, "big_white_label");
+        Card card = getNextCard();
+        if (card == null) {
+            return;
+        }
+
+        textLabel = new Label(card.getQuestion(), game.skin, "big_white_label");
         textLabel.setX(game.viewportWidth);
         textLabel.setY(y);
         addActor(textLabel);

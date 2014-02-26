@@ -36,8 +36,8 @@ public class WordScreen implements Screen {
 
         backgroundActor = new BackgroundActor(game);
 
-        wordMarqueeActor1 = new WordMarqueeActor(this.game, 650);
-        wordMarqueeActor2 = new WordMarqueeActor(this.game, 400);
+        wordMarqueeActor1 = new WordMarqueeActor(this.game, 550);
+        wordMarqueeActor2 = new WordMarqueeActor(this.game, 350);
         wordMarqueeActor3 = new WordMarqueeActor(this.game, 150);
         wordBoxActor = new WordBoxActor(this.game);
 
@@ -60,6 +60,7 @@ public class WordScreen implements Screen {
         Timer.schedule(new Task() {
             @Override
             public void run() {
+                wordBoxActor.setCardToDisplay(wordMarqueeActor2.getCurrentCard());
                 wordBoxActor.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(1)));
                 stage.addActor(wordBoxActor);
 
@@ -79,7 +80,7 @@ public class WordScreen implements Screen {
                             }
                         })));
                     }
-                }, 3.0f);
+                }, 6.0f);
             }
         }, 10, 20);
 

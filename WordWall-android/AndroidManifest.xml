@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.SettingsUI" />
+            android:name=".ui.SettingsUI"
+            android:exported="true" />
 
         <activity
             android:name=".ui.DatabasesListActivity" />
