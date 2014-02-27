@@ -3,9 +3,7 @@ package org.liberty.android.wordwall;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -42,7 +40,30 @@ public class WordScreen implements Screen {
         wordBoxActor = new WordBoxActor(this.game);
 
         stage.addActor(backgroundActor);
-        stage.addActor(wordMarqueeActor1);
+
+        initActorTimers();
+
+        //wordMarqueeActor.setColor(new Color(1, 1, 1, 0.5f));
+
+        Gdx.input.setInputProcessor(stage);
+    }
+
+    @Override
+    public void render(float delta) {
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1f / 30));
+        stage.draw();
+
+    }
+
+    private void initActorTimers() {
+        Timer.schedule(new Task() {
+            @Override
+            public void run() {
+                stage.addActor(wordMarqueeActor1);
+            }
+        }, 0);
+
         Timer.schedule(new Task() {
             @Override
             public void run() {
@@ -83,54 +104,31 @@ public class WordScreen implements Screen {
                 }, 6.0f);
             }
         }, 10, 20);
-
-        //wordMarqueeActor.setColor(new Color(1, 1, 1, 0.5f));
-
-        Gdx.input.setInputProcessor(stage);
-    }
-
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act(Gdx.graphics.getDeltaTime());
-        stage.draw();
-
     }
 
     @Override
     public void resize(int width, int height) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void show() {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void hide() {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void pause() {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void resume() {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void dispose() {
-        // TODO Auto-generated method stub
-
     }
 
 }
