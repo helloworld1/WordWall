@@ -16,7 +16,7 @@ public class SkinGenerator {
     private TextureRegion fontImageTextureRegion;
 
     public SkinGenerator(WordWall game) {
-        fontImageTextureRegion = new TextureRegion(game.assetManager.get("fonts/dsf.png", Texture.class));
+        fontImageTextureRegion = new TextureRegion(game.assetManager.get("fonts/dsf.etc1", Texture.class));
     }
 
     public Skin getSkin() {

@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -12,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 public class WordMarqueeActor extends Group {
 
     public static final float INITIAL_ALPHA = 0.9f;
+
+    private OrthographicCamera camera = new OrthographicCamera();
 
     private WordWall game;
 
@@ -36,10 +39,16 @@ public class WordMarqueeActor extends Group {
     public WordMarqueeActor(WordWall game, float y) {
         this.y = y;
         this.game = game;
+        textLabel = new TransparentBackgroundLabel(this.game, "", game.skin, "big_white_label");
+        addActor(textLabel);
         initNewLabel();
         this.game.registerOnCardResolverChangedListener(onCardResolverChangedListener);
+        this.camera.setToOrtho(false, game.viewportWidth, game.viewportHeight);
+
+        addAction(Actions.alpha(INITIAL_ALPHA));
     }
 
+    @Override
     public void act(float delta) {
         super.act(delta);
         if (isLabelOutOfBound()) {
@@ -75,11 +84,10 @@ public class WordMarqueeActor extends Group {
             return;
         }
 
-        textLabel = new Label(card.getQuestion(), game.skin, "big_white_label");
+        textLabel.setText(card.getQuestion());
         textLabel.setX(game.viewportWidth);
         textLabel.setY(y);
-        addActor(textLabel);
-        addAction(Actions.alpha(INITIAL_ALPHA));
+        textLabel.pack();
     }
 
 }

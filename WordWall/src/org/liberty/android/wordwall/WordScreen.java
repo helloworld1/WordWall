@@ -4,6 +4,7 @@ package org.liberty.android.wordwall;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -26,8 +27,12 @@ public class WordScreen implements Screen {
 
     private WordBoxActor wordBoxActor;
 
+    private final OrthographicCamera camera;
+
     public WordScreen(WordWall game) {
         this.game = game;
+        this.camera = new OrthographicCamera();
+        this.camera.setToOrtho(false, game.viewportWidth, game.viewportHeight);
 
         stage = new Stage();
         stage.setViewport(game.viewportWidth, game.viewportHeight);
@@ -51,6 +56,8 @@ public class WordScreen implements Screen {
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        camera.update();
+        game.batch.setProjectionMatrix(camera.combined);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1f / 30));
         stage.draw();
 

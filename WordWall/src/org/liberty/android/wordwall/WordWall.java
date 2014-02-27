@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class WordWall extends Game {
@@ -36,8 +38,10 @@ public class WordWall extends Game {
         batch.enableBlending();
 
         assetManager = new AssetManager();
-        assetManager.load("fonts/dsf.png", Texture.class);
+        assetManager.setLoader(ShaderProgram.class, new ShaderAssetLoader(new InternalFileHandleResolver()));
+        assetManager.load("fonts/dsf.etc1", Texture.class);
         assetManager.load("images/background.etc1", Texture.class);
+        assetManager.load("shaders/font_alpha", ShaderProgram.class);
 
         this.setScreen(new LoadingScreen(this));
     }

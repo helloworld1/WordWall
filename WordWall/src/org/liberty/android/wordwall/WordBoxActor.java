@@ -5,6 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
+/**
+ * A text box with a title for question and a definition for the question.
+ */
 public class WordBoxActor extends Group {
     private WordWall game;
 
@@ -33,9 +36,9 @@ public class WordBoxActor extends Group {
         table.setFillParent(true);
         table.center();
 
-        titleLabel = new Label("", game.skin, "big_white_label");
+        titleLabel = new TransparentBackgroundLabel(this.game, "", game.skin, "big_white_label");
         titleLabel.setWrap(true);
-        definitionLabel = new Label("", game.skin, "med_white_label");
+        definitionLabel = new TransparentBackgroundLabel(this.game, "", game.skin, "med_white_label");
         definitionLabel.setWrap(true);
         table.row().width(getWidth()).center().maxHeight(100).padBottom(25);
         table.add(titleLabel);
