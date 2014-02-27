@@ -5,9 +5,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
@@ -19,13 +21,9 @@ public class WordScreen implements Screen {
 
     private Actor backgroundActor;
 
-    private WordMarqueeActor wordMarqueeActor1;
-
-    private WordMarqueeActor wordMarqueeActor2;
-
-    private WordMarqueeActor wordMarqueeActor3;
-
     private WordBoxActor wordBoxActor;
+
+    private Array<WordMarqueeActor> wordMarqueeActors;
 
     private final OrthographicCamera camera;
 
@@ -39,9 +37,9 @@ public class WordScreen implements Screen {
 
         backgroundActor = new BackgroundActor(game);
 
-        wordMarqueeActor1 = new WordMarqueeActor(this.game, 550);
-        wordMarqueeActor2 = new WordMarqueeActor(this.game, 350);
-        wordMarqueeActor3 = new WordMarqueeActor(this.game, 150);
+        wordMarqueeActors = new Array<WordMarqueeActor>();
+        initWordMarqueeActors(150, 550, 3);
+
         wordBoxActor = new WordBoxActor(this.game);
 
         stage.addActor(backgroundActor);
@@ -63,52 +61,61 @@ public class WordScreen implements Screen {
 
     }
 
+    private void initWordMarqueeActors(float bottomY, float topY, int count) {
+        float incremental = (topY - bottomY) / Math.max(1, (count - 1));
+
+        for (int i = count - 1; i >= 0; i--) {
+            float y = bottomY + i * incremental; 
+            WordMarqueeActor marquee = new WordMarqueeActor(this.game, y);
+            wordMarqueeActors.add(marquee);
+        }
+    }
+
     private void initActorTimers() {
-        Timer.schedule(new Task() {
-            @Override
-            public void run() {
-                stage.addActor(wordMarqueeActor1);
-            }
-        }, 0);
 
-        Timer.schedule(new Task() {
-            @Override
-            public void run() {
-                stage.addActor(wordMarqueeActor2);
-            }
-        }, 2.5f);
+        for (int i = 0; i < wordMarqueeActors.size; i++) {
+            final int n = i;
+            Timer.schedule(new Task() {
+                @Override
+                public void run() {
+                    stage.addActor(wordMarqueeActors.get(n));
+                }
+            }, i * MathUtils.random(1.5f, 2.5f));
+        }
 
+        // The word box will show in fixed intervals
         Timer.schedule(new Task() {
             @Override
             public void run() {
-                stage.addActor(wordMarqueeActor3);
-            }
-        }, 4.0f);
-
-        Timer.schedule(new Task() {
-            @Override
-            public void run() {
-                wordBoxActor.setCardToDisplay(wordMarqueeActor2.getCurrentCard());
+                // Randomly choose the card to display from a marquee
+                WordMarqueeActor chosenMarquee = wordMarqueeActors.get(MathUtils.random(0, wordMarqueeActors.size - 1));
+                wordBoxActor.setCardToDisplay(chosenMarquee.getCurrentCard());
+                
+                // Here is what happened:
+                // 1. The marquee text will be more transparent
+                // 2. The word box fade in
+                // 3. the word box disappears after a few seconds
+                // 4. The word box fade out
+                // 5. The marquees will return to its initial alpha
                 wordBoxActor.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(1)));
                 stage.addActor(wordBoxActor);
 
-                wordMarqueeActor1.addAction(Actions.alpha(0.3f, 1f));
-                wordMarqueeActor2.addAction(Actions.alpha(0.3f, 1f));
-                wordMarqueeActor3.addAction(Actions.alpha(0.3f, 1f));
+                for (WordMarqueeActor marquee : wordMarqueeActors) {
+                    marquee.addAction(Actions.alpha(0.3f, 1f));
+                }
 
-                Timer.schedule(new Task() {
-                    @Override
+                stage.addAction(Actions.delay(6f, Actions.run(new Runnable() {
                     public void run() {
-                        wordMarqueeActor1.addAction(Actions.alpha(WordMarqueeActor.INITIAL_ALPHA, 1f));
-                        wordMarqueeActor2.addAction(Actions.alpha(WordMarqueeActor.INITIAL_ALPHA, 1f));
-                        wordMarqueeActor3.addAction(Actions.alpha(WordMarqueeActor.INITIAL_ALPHA, 1f));
+                        for (WordMarqueeActor marquee : wordMarqueeActors) {
+                            marquee.addAction(Actions.alpha(WordMarqueeActor.INITIAL_ALPHA, 1f));
+                        }
                         wordBoxActor.addAction(Actions.sequence(Actions.fadeOut(1), Actions.run(new Runnable() {
                             public void run() {
                                 stage.getRoot().removeActor(wordBoxActor);
                             }
                         })));
                     }
-                }, 6.0f);
+                })));
             }
         }, 10, 20);
     }
@@ -128,10 +135,12 @@ public class WordScreen implements Screen {
 
     @Override
     public void pause() {
+        Timer.instance().stop();
     }
 
     @Override
     public void resume() {
+        Timer.instance().start();
     }
 
     @Override
