@@ -24,11 +24,7 @@ void main() {
     normalTexCoords.s = 0.5 + colorTexCoords.s;
 
     vec4 color = texture2D(u_texture, colorTexCoords);
-    vec3 nColor = texture2D(u_texture, colorTexCoords).rgb;
-
-    // this is for debugging purposes, allowing us to lower the intensity of our bump map
-    vec3 nBase = vec3(0.5, 0.5, 1.0);
-    nColor = mix(nBase, nColor, vec3(0.2, 0.2, 0.2));
+    vec3 nColor = texture2D(u_texture, normalTexCoords).rgb;
 
     // normals need to be converted to [-1.0, 1.0] range and normalized
     vec3 normal = normalize(nColor * 2.0 - 1.0);

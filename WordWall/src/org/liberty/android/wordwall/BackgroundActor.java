@@ -42,7 +42,7 @@ public class BackgroundActor extends Actor {
         shader.begin();
         shader.setUniformf("lightPos", lightX, lightY, 110f);
         shader.setUniformf("ambientColor", 1.0f, 1.0f, 1.0f);
-        shader.setUniformf("lightColor", 0.9f, 0.9f, 0.9f);
+        shader.setUniformf("lightColor", 1.0f, 1.0f, 1.0f);
         shader.setUniformf("ambientIntensity", 0.3f, 0.3f, 0.3f);
         shader.setUniformi("useNormals", 1);
         shader.end();

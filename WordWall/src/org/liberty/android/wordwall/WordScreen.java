@@ -66,6 +66,36 @@ public class WordScreen implements Screen {
 
     }
 
+    @Override
+    public void resize(int width, int height) {
+        // Not inplemented
+    }
+
+    @Override
+    public void show() {
+        // Not inplemented
+    }
+
+    @Override
+    public void hide() {
+        // Not inplemented
+    }
+
+    @Override
+    public void pause() {
+        // Not inplemented
+    }
+
+    @Override
+    public void resume() {
+        // Not inplemented
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
+    }
+
     /**
      * Initialize the marquee actors.
      *
@@ -173,35 +203,4 @@ public class WordScreen implements Screen {
             }
         })));
     }
-
-    @Override
-    public void resize(int width, int height) {
-        // Not inplemented
-    }
-
-    @Override
-    public void show() {
-        // Not inplemented
-    }
-
-    @Override
-    public void hide() {
-        // Not inplemented
-    }
-
-    @Override
-    public void pause() {
-        // Not inplemented
-    }
-
-    @Override
-    public void resume() {
-        // Not inplemented
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
-    }
-
 }
