@@ -6,10 +6,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
@@ -24,7 +24,7 @@ public class WordScreen implements Screen {
 
     private Stage stage;
 
-    private Actor backgroundActor;
+    private BackgroundActor backgroundActor;
 
     private WordBoxActor wordBoxActor;
 
@@ -42,7 +42,7 @@ public class WordScreen implements Screen {
         stage = new Stage();
         stage.setViewport(game.viewportWidth, game.viewportHeight);
 
-        backgroundActor = new BackgroundActor(game);
+        initBackground();
 
         wordMarqueeActors = new Array<WordMarqueeActor>();
         initWordMarqueeActors(150, 550, 3);
@@ -92,6 +92,21 @@ public class WordScreen implements Screen {
                 }
             });
         }
+    }
+
+    /**
+     * Set up the background and light
+     */
+    private void initBackground() {
+        backgroundActor = new BackgroundActor(game);
+        backgroundActor.setLightMoving(true);
+        backgroundActor.addListener(new ActorGestureListener() {
+            @Override
+            public void pan(InputEvent event, float x, float y, float deltaX, float deltaY) {
+                 backgroundActor.setLightX(x);
+                 backgroundActor.setLightY(y);
+            }
+        });
     }
 
     /**

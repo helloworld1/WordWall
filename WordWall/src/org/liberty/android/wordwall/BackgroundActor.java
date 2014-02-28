@@ -1,25 +1,29 @@
 package org.liberty.android.wordwall;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 public class BackgroundActor extends Actor {
 
     private WordWall game;
 
+    /**
+     * The shader will handle the normal mapping.
+     */
     private ShaderProgram shader;
 
+    /**
+     * The texture's left half is the color and the right half is the normal.
+     */
     private Texture wallTexture;
 
     private float lightX, lightY;
 
     private boolean lightMovingRight = true;
+
+    private boolean lightMoving = true;
 
     public BackgroundActor(WordWall game) {
         this.game = game;
@@ -28,31 +32,21 @@ public class BackgroundActor extends Actor {
 
         this.lightX = game.viewportWidth / 2;
         this.lightY = game.viewportHeight / 2;
-
-        //backgroundSprite.setSize(game.viewportWidth, game.viewportHeight);
-        this.addListener(new InputListener() {
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("down x " + x + " y " + y);
-                return true;
-            }
-
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("up");
-            }
-        });
+        setWidth(game.viewportWidth);
+        setHeight(game.viewportHeight);
+        setBounds(0, 0, game.viewportWidth, game.viewportHeight);
     }
 
     @Override
     public void draw (SpriteBatch batch, float parentAlpha) {
         shader.begin();
-
-        shader.setUniformf("lightPos", lightX, lightY, 90f);
+        shader.setUniformf("lightPos", lightX, lightY, 110f);
         shader.setUniformf("ambientColor", 1.0f, 1.0f, 1.0f);
         shader.setUniformf("lightColor", 0.9f, 0.9f, 0.9f);
         shader.setUniformf("ambientIntensity", 0.3f, 0.3f, 0.3f);
         shader.setUniformi("useNormals", 1);
-        //shader.setUniformf("strength", 0.2f);
         shader.end();
+
         batch.setShader(shader);
         batch.draw(wallTexture, 0, 0, 480f, 800f);
         super.draw(batch, parentAlpha);
@@ -61,17 +55,40 @@ public class BackgroundActor extends Actor {
 
     public void act(float delta) {
         super.act(delta);
-        if (lightMovingRight) {
-            lightX += delta * 60;
-        } else {
-            lightX -= delta * 60;
+        if (lightMoving) {
+            if (lightMovingRight) {
+                lightX += delta * 60;
+            } else {
+                lightX -= delta * 60;
+            }
+            if (lightX > game.viewportWidth) {
+                lightMovingRight = false;
+            }
+            if (lightX < 0) {
+                lightMovingRight = true;
+            }
         }
-        if (lightX > game.viewportWidth) {
-            lightMovingRight = false;
-        }
-        if (lightX < 0) {
-            lightMovingRight = true;
-        }
+    }
+
+    /**
+     * @param lightX the lightX to set
+     */
+    public void setLightX(float lightX) {
+        this.lightX = lightX;
+    }
+
+    /**
+     * @param lightY the lightY to set
+     */
+    public void setLightY(float lightY) {
+        this.lightY = lightY;
+    }
+
+    /**
+     * @param lightMoving the lightMoving to set
+     */
+    public void setLightMoving(boolean lightMoving) {
+        this.lightMoving = lightMoving;
     }
 }
 
