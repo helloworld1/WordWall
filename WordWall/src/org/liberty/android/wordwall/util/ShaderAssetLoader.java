@@ -1,4 +1,4 @@
-package org.liberty.android.wordwall;
+package org.liberty.android.wordwall.util;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;

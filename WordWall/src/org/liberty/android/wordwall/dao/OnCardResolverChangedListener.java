@@ -1,4 +1,5 @@
-package org.liberty.android.wordwall;
+package org.liberty.android.wordwall.dao;
+
 
 /**
  * callback when the card resolver changed.

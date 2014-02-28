@@ -1,4 +1,4 @@
-package org.liberty.android.wordwall;
+package org.liberty.android.wordwall.constant;
 
 public class PreferenceKeys {
     public static final String SETTING_NAME = "org.liberty.multi.bulletproof.Preferences";

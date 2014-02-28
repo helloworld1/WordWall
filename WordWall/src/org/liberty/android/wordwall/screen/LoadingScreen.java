@@ -1,5 +1,8 @@
-package org.liberty.android.wordwall;
+package org.liberty.android.wordwall.screen;
 
+
+import org.liberty.android.wordwall.WordWall;
+import org.liberty.android.wordwall.util.SkinGenerator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

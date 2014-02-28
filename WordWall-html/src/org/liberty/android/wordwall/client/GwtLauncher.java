@@ -1,7 +1,7 @@
 package org.liberty.android.wordwall.client;
 
-import org.liberty.android.wordwall.TutorialCardResolver;
 import org.liberty.android.wordwall.WordWall;
+import org.liberty.android.wordwall.dao.TutorialCardResolver;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;

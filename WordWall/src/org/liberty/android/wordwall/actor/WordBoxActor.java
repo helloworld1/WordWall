@@ -1,4 +1,7 @@
-package org.liberty.android.wordwall;
+package org.liberty.android.wordwall.actor;
+
+import org.liberty.android.wordwall.WordWall;
+import org.liberty.android.wordwall.model.Card;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Group;

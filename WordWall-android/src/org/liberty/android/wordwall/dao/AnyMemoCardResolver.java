@@ -3,8 +3,7 @@ package org.liberty.android.wordwall.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.liberty.android.wordwall.Card;
-import org.liberty.android.wordwall.CardResolver;
+import org.liberty.android.wordwall.model.Card;
 
 import android.content.ContentResolver;
 import android.content.Context;

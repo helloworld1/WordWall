@@ -1,5 +1,7 @@
 package org.liberty.android.wordwall;
 
+import org.liberty.android.wordwall.dao.TutorialCardResolver;
+
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 

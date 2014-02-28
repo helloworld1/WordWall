@@ -1,9 +1,14 @@
-package org.liberty.android.wordwall;
+package org.liberty.android.wordwall.actor;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+
+import org.liberty.android.wordwall.WordWall;
+import org.liberty.android.wordwall.dao.CardResolver;
+import org.liberty.android.wordwall.dao.OnCardResolverChangedListener;
+import org.liberty.android.wordwall.model.Card;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Group;

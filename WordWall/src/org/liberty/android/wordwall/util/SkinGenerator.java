@@ -1,4 +1,6 @@
-package org.liberty.android.wordwall;
+package org.liberty.android.wordwall.util;
+
+import org.liberty.android.wordwall.WordWall;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;

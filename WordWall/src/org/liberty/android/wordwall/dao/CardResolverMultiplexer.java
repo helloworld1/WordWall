@@ -1,8 +1,10 @@
-package org.liberty.android.wordwall;
+package org.liberty.android.wordwall.dao;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.liberty.android.wordwall.model.Card;
 
 /**
  * Use multiple card resolvers to retrieve cards.

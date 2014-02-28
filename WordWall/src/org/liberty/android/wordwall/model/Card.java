@@ -1,4 +1,4 @@
-package org.liberty.android.wordwall;
+package org.liberty.android.wordwall.model;
 
 public class Card {
 

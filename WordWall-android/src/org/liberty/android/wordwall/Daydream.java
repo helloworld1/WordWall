@@ -1,6 +1,9 @@
 package org.liberty.android.wordwall;
 
 import org.liberty.android.wordwall.dao.AnyMemoCardResolver;
+import org.liberty.android.wordwall.dao.CardResolver;
+import org.liberty.android.wordwall.dao.CardResolverMultiplexer;
+import org.liberty.android.wordwall.dao.TutorialCardResolver;
 import org.liberty.android.wordwall.ui.SettingsUI;
 
 import android.annotation.TargetApi;
