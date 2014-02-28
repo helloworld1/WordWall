@@ -38,7 +38,7 @@ public class WordMarqueeActor extends Group {
     // it will use the new resolver to chagne card
     private OnCardResolverChangedListener onCardResolverChangedListener = new OnCardResolverChangedListener() {
         @Override
-        public void onResolverchanged(CardResolver resolver) {
+        public void onResolverChanged(CardResolver resolver) {
             cardQueue.clear();
         }
     };
