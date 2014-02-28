@@ -12,6 +12,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
+/**
+ * The main entry point to WordWall.
+ */
 public class WordWall extends Game {
 
     public SpriteBatch batch;
@@ -38,6 +41,7 @@ public class WordWall extends Game {
         batch = new SpriteBatch();
         batch.enableBlending();
 
+        ShaderProgram.pedantic = true;
         assetManager = new AssetManager();
         assetManager.setLoader(ShaderProgram.class, new ShaderAssetLoader(new InternalFileHandleResolver()));
 
@@ -45,8 +49,10 @@ public class WordWall extends Game {
         // It will also load fonts/dsf.etc1 texture as dependency
         assetManager.load("fonts/dsf.fnt", BitmapFont.class);
 
-        assetManager.load("images/background.etc1", Texture.class);
+        assetManager.load("images/wall_with_normal.etc1", Texture.class);
+
         assetManager.load("shaders/font_alpha", ShaderProgram.class);
+        assetManager.load("shaders/normalmap2d", ShaderProgram.class);
 
         this.setScreen(new LoadingScreen(this));
     }
