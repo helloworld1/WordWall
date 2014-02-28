@@ -26,8 +26,7 @@ public class LoadingScreen implements Screen {
     } 
 
     public void postInit() {
-        SkinGenerator skinGenerator = new SkinGenerator(game);
-        game.skin = skinGenerator.getSkin();
+        game.skin = SkinGenerator.getSkin(game);
         game.setScreen(new WordScreen(game));
     }
 

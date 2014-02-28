@@ -23,6 +23,7 @@ public class LiveWallpaper extends AndroidLiveWallpaperService {
 
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         cfg.useGL20 = true;
+        cfg.getTouchEventsForLiveWallpaper = true;
         
         String dbName = PreferenceManager.getDefaultSharedPreferences(this).getString(SettingsUI.DB_NAME_KEY, "");
         CardResolver resolver = new CardResolverMultiplexer(new AnyMemoCardResolver(LiveWallpaper.this, dbName), new TutorialCardResolver());

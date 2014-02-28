@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class WordMarqueeActor extends Group {
 
@@ -26,6 +27,8 @@ public class WordMarqueeActor extends Group {
 
     private Queue<Card> cardQueue = new LinkedList<Card>();
 
+    private Skin skin;
+
     // When the resolver changed clear the queue so next time,
     // it will use the new resolver to chagne card
     private OnCardResolverChangedListener onCardResolverChangedListener = new OnCardResolverChangedListener() {
@@ -38,8 +41,12 @@ public class WordMarqueeActor extends Group {
 
     public WordMarqueeActor(WordWall game, float y) {
         this.y = y;
+
         this.game = game;
-        textLabel = new TransparentBackgroundLabel(this.game, "", game.skin, "big_white_label");
+        skin = game.skin;
+
+        textLabel = new TransparentBackgroundLabel(this.game, "", skin, "default_label");
+        textLabel.setFontScale(2.0f);
         addActor(textLabel);
         initNewLabel();
         this.game.registerOnCardResolverChangedListener(onCardResolverChangedListener);

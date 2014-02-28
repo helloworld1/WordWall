@@ -7,12 +7,17 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
+/**
+ * The screen show scrolling words and a nice background.
+ */
 public class WordScreen implements Screen {
 
     private WordWall game;
@@ -26,6 +31,8 @@ public class WordScreen implements Screen {
     private Array<WordMarqueeActor> wordMarqueeActors;
 
     private final OrthographicCamera camera;
+
+    private boolean wordboxShown = false;
 
     public WordScreen(WordWall game) {
         this.game = game;
@@ -46,8 +53,6 @@ public class WordScreen implements Screen {
 
         initActorTimers();
 
-        //wordMarqueeActor.setColor(new Color(1, 1, 1, 0.5f));
-
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -61,6 +66,13 @@ public class WordScreen implements Screen {
 
     }
 
+    /**
+     * Initialize the marquee actors.
+     *
+     * @param bottomY the y axis of the bottom line of the marquee.
+     * @param topY the y axis of the top line of the marquee.
+     * @param count how many lines of marquee to display.
+     */
     private void initWordMarqueeActors(float bottomY, float topY, int count) {
         float incremental = (topY - bottomY) / Math.max(1, (count - 1));
 
@@ -68,9 +80,23 @@ public class WordScreen implements Screen {
             float y = bottomY + i * incremental; 
             WordMarqueeActor marquee = new WordMarqueeActor(this.game, y);
             wordMarqueeActors.add(marquee);
+
+            // Add touch listener so touching on the word will show the word box
+            // Note the index is backwards so the index needs to be reversed.
+            final int index = count - 1 - i;
+            marquee.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    Gdx.app.log("Clicked on index: " , "Index: " + index);
+                    showWordBox(wordMarqueeActors.get(index).getCurrentCard());
+                }
+            });
         }
     }
 
+    /**
+     * Set up the timers for the actors to initialize.
+     */
     private void initActorTimers() {
 
         for (int i = 0; i < wordMarqueeActors.size; i++) {
@@ -89,62 +115,78 @@ public class WordScreen implements Screen {
             public void run() {
                 // Randomly choose the card to display from a marquee
                 WordMarqueeActor chosenMarquee = wordMarqueeActors.get(MathUtils.random(0, wordMarqueeActors.size - 1));
-                wordBoxActor.setCardToDisplay(chosenMarquee.getCurrentCard());
-                
-                // Here is what happened:
-                // 1. The marquee text will be more transparent
-                // 2. The word box fade in
-                // 3. the word box disappears after a few seconds
-                // 4. The word box fade out
-                // 5. The marquees will return to its initial alpha
-                wordBoxActor.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(1)));
-                stage.addActor(wordBoxActor);
+                showWordBox(chosenMarquee.getCurrentCard());
+            }
+        }, 10, 20);          
+    }
 
+    /**
+     * Show the wordbox if it is not shown.
+     */
+    private void showWordBox(Card card) {
+        if (wordboxShown) {
+            return;
+        }
+        wordboxShown = true;
+
+        wordBoxActor.setCardToDisplay(card);
+
+        // Here is what happened:
+        // 1. The marquee text will be more transparent
+        // 2. The word box fade in
+        // 3. the word box disappears after a few seconds
+        // 4. The word box fade out
+        // 5. The marquees will return to its initial alpha
+        wordBoxActor.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(1)));
+        stage.addActor(wordBoxActor);
+
+        for (WordMarqueeActor marquee : wordMarqueeActors) {
+            marquee.addAction(Actions.alpha(0.3f, 1f));
+        }
+
+        stage.addAction(Actions.delay(6f, Actions.run(new Runnable() {
+            public void run() {
                 for (WordMarqueeActor marquee : wordMarqueeActors) {
-                    marquee.addAction(Actions.alpha(0.3f, 1f));
+                    marquee.addAction(Actions.alpha(WordMarqueeActor.INITIAL_ALPHA, 1f));
                 }
-
-                stage.addAction(Actions.delay(6f, Actions.run(new Runnable() {
+                wordBoxActor.addAction(Actions.sequence(Actions.fadeOut(1), Actions.run(new Runnable() {
                     public void run() {
-                        for (WordMarqueeActor marquee : wordMarqueeActors) {
-                            marquee.addAction(Actions.alpha(WordMarqueeActor.INITIAL_ALPHA, 1f));
-                        }
-                        wordBoxActor.addAction(Actions.sequence(Actions.fadeOut(1), Actions.run(new Runnable() {
-                            public void run() {
-                                stage.getRoot().removeActor(wordBoxActor);
-                            }
-                        })));
+                        stage.getRoot().removeActor(wordBoxActor);
+                        wordboxShown = false;
                     }
                 })));
             }
-        }, 10, 20);
+        })));
     }
 
     @Override
     public void resize(int width, int height) {
-
+        // Not inplemented
     }
 
     @Override
     public void show() {
+        // Not inplemented
     }
 
     @Override
     public void hide() {
+        // Not inplemented
     }
 
     @Override
     public void pause() {
-        Timer.instance().stop();
+        // Not inplemented
     }
 
     @Override
     public void resume() {
-        Timer.instance().start();
+        // Not inplemented
     }
 
     @Override
     public void dispose() {
+        stage.dispose();
     }
 
 }

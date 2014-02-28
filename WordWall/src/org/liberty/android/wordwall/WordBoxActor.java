@@ -3,6 +3,7 @@ package org.liberty.android.wordwall;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 /**
@@ -17,11 +18,17 @@ public class WordBoxActor extends Group {
 
     private Table table;
 
+    private Skin skin;
+
     public WordBoxActor(WordWall game) {
         this.game = game;
-        this.setX(game.viewportWidth * 0.1f);
+
+        skin = game.skin;
+        // The X is set to 0 because the label will be center aligned
+        // SO the width will control the X.
+        this.setX(0f);
         this.setY(game.viewportHeight * 0.3f);
-        this.setWidth(game.viewportWidth * 0.8f);
+        this.setWidth(game.viewportWidth * 0.7f);
         this.setHeight(game.viewportHeight * 0.7f);
         initTable();
     }
@@ -36,13 +43,16 @@ public class WordBoxActor extends Group {
         table.setFillParent(true);
         table.center();
 
-        titleLabel = new TransparentBackgroundLabel(this.game, "", game.skin, "big_white_label");
+        titleLabel = new TransparentBackgroundLabel(this.game, "", skin, "default_label");
+        // Make it bigger
+        titleLabel.setFontScale(2.0f);
         titleLabel.setWrap(true);
-        definitionLabel = new TransparentBackgroundLabel(this.game, "", game.skin, "med_white_label");
+        definitionLabel = new TransparentBackgroundLabel(this.game, "", skin, "default_label");
+        definitionLabel.setFontScale(1.5f);
         definitionLabel.setWrap(true);
-        table.row().width(getWidth()).center().maxHeight(100).padBottom(25);
+        table.row().width(0.7f * getWidth()).center().maxHeight(100).padBottom(25);
         table.add(titleLabel);
-        table.row().width(getWidth()).center().maxHeight(675);
+        table.row().width(0.7f * getWidth()).center().maxHeight(675);
         table.add(definitionLabel);
         this.addActor(table);
     }
@@ -50,7 +60,7 @@ public class WordBoxActor extends Group {
     public void setCardToDisplay(Card card) {
         titleLabel.setText(card.getQuestion());
         definitionLabel.setText(card.getAnswer());
+        titleLabel.pack();
+        definitionLabel.pack();
     }
 }
-
-

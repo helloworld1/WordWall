@@ -7,6 +7,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -15,9 +16,6 @@ public class WordWall extends Game {
 
     public SpriteBatch batch;
 
-    // Initialized after loading screen
-    public Skin skin;
-
     public float viewportWidth = 480;
 
     public float viewportHeight= 800;
@@ -25,6 +23,9 @@ public class WordWall extends Game {
     public AssetManager assetManager;
 
     public CardResolver cardResolver;
+
+    // WIll be loaded after the assets are loaded in loading screen
+    public Skin skin = null;
 
     private List<OnCardResolverChangedListener> onCardResolverChangedListeners = new ArrayList<OnCardResolverChangedListener>(3);
 
@@ -39,7 +40,11 @@ public class WordWall extends Game {
 
         assetManager = new AssetManager();
         assetManager.setLoader(ShaderProgram.class, new ShaderAssetLoader(new InternalFileHandleResolver()));
-        assetManager.load("fonts/dsf.etc1", Texture.class);
+
+        // The droid sans fallback font.
+        // It will also load fonts/dsf.etc1 texture as dependency
+        assetManager.load("fonts/dsf.fnt", BitmapFont.class);
+
         assetManager.load("images/background.etc1", Texture.class);
         assetManager.load("shaders/font_alpha", ShaderProgram.class);
 
