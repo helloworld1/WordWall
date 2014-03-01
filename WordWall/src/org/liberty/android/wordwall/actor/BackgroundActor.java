@@ -43,9 +43,8 @@ public class BackgroundActor extends Actor {
     public void draw (SpriteBatch batch, float parentAlpha) {
         shader.begin();
         shader.setUniformf("lightPos", lightX, lightY, 110f);
-        shader.setUniformf("ambientColor", 1.0f, 1.0f, 1.0f);
+        shader.setUniformf("ambientColor", 0.2f, 0.2f, 0.2f);
         shader.setUniformf("lightColor", 1.0f, 1.0f, 1.0f);
-        shader.setUniformf("ambientIntensity", 0.3f, 0.3f, 0.3f);
         shader.setUniformi("useNormals", 1);
         shader.end();
 

@@ -4,10 +4,29 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-	<TextView
+	<Button
+        android:id="@+id/preview" 
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content" 
-	    android:text="Hello World, WordWall"
-    />
+        android:onClick="openPreview"
+        android:text="@string/preview_text"
+        android:textSize="24sp"
+        android:padding="20dp" />
+	<Button
+        android:id="@+id/settings" 
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+        android:onClick="openSettings"
+        android:text="@string/settings_text"
+        android:textSize="24sp"
+        android:padding="20dp" />
+	<Button
+        android:id="@+id/force" 
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+        android:onClick="forceClose"
+        android:text="@string/force_close_text"
+        android:textSize="24sp"
+        android:padding="20dp" />
 </LinearLayout>
 

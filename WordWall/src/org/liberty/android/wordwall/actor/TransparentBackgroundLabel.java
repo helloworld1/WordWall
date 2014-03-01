@@ -13,12 +13,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  */
 public class TransparentBackgroundLabel extends Label {
 
+    /**
+     * Used to process font like setting alpha for etc1 compressed texture
+     */
     private ShaderProgram shader;
 
     public TransparentBackgroundLabel(WordWall game, CharSequence text, Skin skin,
             String name) {
         super(text, skin, name);
-        shader = game.assetManager.get("shaders/font_alpha", ShaderProgram.class);
+        shader = game.assetManager.get("shaders/font_process", ShaderProgram.class);
     }
 
 

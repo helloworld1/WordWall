@@ -53,7 +53,7 @@ public class WordBoxActor extends Group {
         definitionLabel = new TransparentBackgroundLabel(this.game, "", skin, "default_label");
         definitionLabel.setFontScale(1.5f);
         definitionLabel.setWrap(true);
-        table.row().width(0.7f * getWidth()).center().maxHeight(100).padBottom(25);
+        table.row().width(0.6f * getWidth()).center().maxHeight(100).padBottom(25);
         table.add(titleLabel);
         table.row().width(0.7f * getWidth()).center().maxHeight(675);
         table.add(definitionLabel);

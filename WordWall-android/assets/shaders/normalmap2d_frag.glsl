@@ -9,7 +9,6 @@ varying vec4 worldCoord;
 uniform sampler2D u_texture;
 uniform vec3 lightPos;
 uniform vec3 ambientColor;
-uniform float ambientIntensity; 
 uniform vec2 resolution;
 uniform vec3 lightColor;
 uniform bool useNormals;
@@ -35,7 +34,7 @@ void main() {
     vec3 lightDir = normalize(deltaPos);
     float lambert = useNormals ? clamp(dot(normal, lightDir), 0.0, 1.0) : 1.0;
 
-    vec3 result = (ambientColor * ambientIntensity) + (lightColor.rgb * lambert) * 1.0;
+    vec3 result = ambientColor + (lightColor.rgb * lambert) * 1.0;
     result *= color.rgb;
 
     gl_FragColor = v_color * vec4(result, color.a);

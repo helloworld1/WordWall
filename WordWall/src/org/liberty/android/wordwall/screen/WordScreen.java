@@ -9,6 +9,7 @@ import org.liberty.android.wordwall.model.Card;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
@@ -39,6 +40,8 @@ public class WordScreen implements Screen {
     private final OrthographicCamera camera;
 
     private boolean wordboxShown = false;
+
+    private FPSLogger fpsLogger = new FPSLogger();
 
     public WordScreen(WordWall game) {
         this.game = game;

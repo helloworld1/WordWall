@@ -25,4 +25,8 @@
     <string name="rename_text">Rename</string>
     <string name="settings_UI_title">WordWall setting</string>
     <string name="title_install_anymemo">AnyMemo not found</string>
+    <string name="settings_text">Settings</string>
+    <string name="preview_text">Preview</string>
+    <string name="force_close_text">Force close</string>
+    <string name="force_close_dialog_message">Warning: you will force close all WordWall processes including the livewallpaper and daydream.</string>
 </resources>

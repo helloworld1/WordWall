@@ -71,7 +71,7 @@ public class WordWall extends Game {
         // Used for normal mapping
         assetManager.load("images/wall_with_normal.etc1", Texture.class);
 
-        assetManager.load("shaders/font_alpha", ShaderProgram.class);
+        assetManager.load("shaders/font_process", ShaderProgram.class);
         assetManager.load("shaders/normalmap2d", ShaderProgram.class);
 
         this.setScreen(new LoadingScreen(this));
