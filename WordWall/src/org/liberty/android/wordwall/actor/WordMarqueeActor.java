@@ -1,6 +1,5 @@
 package org.liberty.android.wordwall.actor;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -78,7 +77,6 @@ public class WordMarqueeActor extends Group {
     public Card getNextCard() {
         if (cardQueue.isEmpty()) {
             List<Card> cards = game.cardResolver.getCards();
-            Collections.shuffle(cards);
             cardQueue.addAll(cards);
         }
 
@@ -101,6 +99,5 @@ public class WordMarqueeActor extends Group {
         textLabel.setY(y);
         textLabel.pack();
     }
-
 }
 

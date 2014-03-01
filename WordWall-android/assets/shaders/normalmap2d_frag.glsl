@@ -11,7 +11,7 @@ uniform vec3 lightPos;
 uniform vec3 ambientColor;
 uniform vec2 resolution;
 uniform vec3 lightColor;
-uniform bool useNormals;
+uniform int useNormals;
 
 void main() {
     // The left half othe image is the color info
@@ -32,7 +32,7 @@ void main() {
     vec3 deltaPos = vec3((lightPos.xy - worldCoord.xy), lightPos.z );
 
     vec3 lightDir = normalize(deltaPos);
-    float lambert = useNormals ? clamp(dot(normal, lightDir), 0.0, 1.0) : 1.0;
+    float lambert = (useNormals == 1) ? clamp(dot(normal, lightDir), 0.0, 1.0) : 1.0;
 
     vec3 result = ambientColor + (lightColor.rgb * lambert) * 1.0;
     result *= color.rgb;
