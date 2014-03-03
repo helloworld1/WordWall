@@ -1,8 +1,6 @@
 package org.liberty.android.wordwall.actor;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 import org.liberty.android.wordwall.WordWall;
 import org.liberty.android.wordwall.dao.CardResolver;
@@ -14,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Array;
 
 public class WordMarqueeActor extends Group {
 
@@ -29,7 +28,7 @@ public class WordMarqueeActor extends Group {
 
     private float y;
 
-    private Queue<Card> cardQueue = new LinkedList<Card>();
+    private Array<Card> cardQueue = new Array<Card>();
 
     private Skin skin;
 
@@ -76,12 +75,15 @@ public class WordMarqueeActor extends Group {
     }
 
     public Card getNextCard() {
-        if (cardQueue.isEmpty()) {
+        if (cardQueue.size == 0) {
             List<Card> cards = game.cardResolver.getCards();
-            cardQueue.addAll(cards);
+            for (Card card : cards) {
+                cardQueue.add(card);
+            }
+            cardQueue.shuffle();
         }
 
-        currentCard = cardQueue.poll();
+        currentCard = cardQueue.pop();
         return currentCard;
     }
 
