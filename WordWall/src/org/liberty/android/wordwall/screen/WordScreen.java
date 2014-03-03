@@ -6,27 +6,25 @@ import org.liberty.android.wordwall.actor.BackgroundActor;
 import org.liberty.android.wordwall.actor.WordBoxActor;
 import org.liberty.android.wordwall.actor.WordMarqueeActor;
 import org.liberty.android.wordwall.model.Card;
+import org.liberty.android.wordwall.util.GameTimer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Timer.Task;
 
 /**
  * The screen show scrolling words and a nice background.
  */
 public class WordScreen implements Screen {
-
     private WordWall game;
 
     private Stage stage;
@@ -41,10 +39,13 @@ public class WordScreen implements Screen {
 
     private boolean wordboxShown = false;
 
-    private FPSLogger fpsLogger = new FPSLogger();
+    private GameTimer timer;
 
     public WordScreen(WordWall game) {
         this.game = game;
+
+        timer = new GameTimer();
+
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, game.viewportWidth, game.viewportHeight);
 
@@ -67,12 +68,18 @@ public class WordScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
+        // Make sure the delta is no larger than 1/30s
+        // A lag will not mess around the timer and actors.
+        float calibratedDelta = Math.min(Gdx.graphics.getDeltaTime(), 1f / 30);
+
+        timer.update(calibratedDelta);
+
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1f / 30));
+        stage.act(calibratedDelta);
         stage.draw();
-
     }
 
     @Override
@@ -83,21 +90,23 @@ public class WordScreen implements Screen {
     @Override
     public void show() {
         // Not inplemented
+        timer.start();
     }
 
     @Override
     public void hide() {
         // Not inplemented
+        timer.stop();
     }
 
     @Override
     public void pause() {
-        // Not inplemented
+        timer.start();
     }
 
     @Override
     public void resume() {
-        // Not inplemented
+        timer.stop();
     }
 
     @Override
@@ -155,7 +164,7 @@ public class WordScreen implements Screen {
 
         for (int i = 0; i < wordMarqueeActors.size; i++) {
             final int n = i;
-            Timer.schedule(new Task() {
+            timer.schedule(new Runnable() {
                 @Override
                 public void run() {
                     stage.addActor(wordMarqueeActors.get(n));
@@ -164,14 +173,14 @@ public class WordScreen implements Screen {
         }
 
         // The word box will show in fixed intervals
-        Timer.schedule(new Task() {
+        timer.schedule(new Runnable() {
             @Override
             public void run() {
                 // Randomly choose the card to display from a marquee
                 WordMarqueeActor chosenMarquee = wordMarqueeActors.get(MathUtils.random(0, wordMarqueeActors.size - 1));
                 showWordBox(chosenMarquee.getCurrentCard());
             }
-        }, 10, 20);          
+        }, 10f, 20f);          
     }
 
     /**
@@ -195,7 +204,7 @@ public class WordScreen implements Screen {
         stage.addActor(wordBoxActor);
 
         for (WordMarqueeActor marquee : wordMarqueeActors) {
-            marquee.addAction(Actions.alpha(0.3f, 1f));
+            marquee.addAction(Actions.alpha(0.2f, 1f));
         }
 
         stage.addAction(Actions.delay(6f, Actions.run(new Runnable() {

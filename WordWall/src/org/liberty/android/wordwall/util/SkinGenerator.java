@@ -14,8 +14,7 @@ public class SkinGenerator {
         Skin skin = new Skin();
 
         // Set the font texture filter
-        game.assetManager.get("fonts/dsf.etc1", Texture.class).setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
-        BitmapFont defaultFont = game.assetManager.get("fonts/dsf.fnt", BitmapFont.class);
+        BitmapFont defaultFont = game.assetManager.get("fonts/serif.fnt", BitmapFont.class);
 
         skin.add("default_font", defaultFont);
 

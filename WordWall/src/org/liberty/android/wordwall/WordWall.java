@@ -66,6 +66,7 @@ public class WordWall extends Game {
         // The droid sans fallback font.
         // It will also load fonts/dsf.etc1 texture as dependency
         assetManager.load("fonts/dsf.fnt", BitmapFont.class);
+        assetManager.load("fonts/serif.fnt", BitmapFont.class);
 
         // The compress texture with left half color info and right half normal value
         // Used for normal mapping

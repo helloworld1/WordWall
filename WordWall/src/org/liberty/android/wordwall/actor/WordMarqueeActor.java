@@ -47,10 +47,11 @@ public class WordMarqueeActor extends Group {
         this.y = y;
 
         this.game = game;
+
         skin = game.skin;
 
         textLabel = new TransparentBackgroundLabel(this.game, "", skin, "default_label");
-        textLabel.setFontScale(2.0f);
+        textLabel.setFontScale(1.0f);
         addActor(textLabel);
         initNewLabel();
         this.game.registerOnCardResolverChangedListener(onCardResolverChangedListener);

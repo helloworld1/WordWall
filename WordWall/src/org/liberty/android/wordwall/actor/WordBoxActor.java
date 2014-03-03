@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 /**
  * A text box with a title for question and a definition for the question.
@@ -30,9 +31,9 @@ public class WordBoxActor extends Group {
         // The X is set to 0 because the label will be center aligned
         // SO the width will control the X.
         this.setX(0f);
-        this.setY(game.viewportHeight * 0.3f);
-        this.setWidth(game.viewportWidth * 0.7f);
-        this.setHeight(game.viewportHeight * 0.7f);
+        //this.setY(game.viewportHeight * 0.3f);
+        this.setWidth(game.viewportWidth);
+        this.setHeight(game.viewportHeight);
         initTable();
     }
 
@@ -43,20 +44,25 @@ public class WordBoxActor extends Group {
 
     public void initTable() {
         table = new Table();
+        table.setWidth(getWidth());
         table.setFillParent(true);
         table.center();
+        table.debug();
 
         titleLabel = new TransparentBackgroundLabel(this.game, "", skin, "default_label");
         // Make it bigger
-        titleLabel.setFontScale(2.0f);
+        titleLabel.setFontScale(1.0f);
         titleLabel.setWrap(true);
+        titleLabel.setAlignment(Align.center);
+
         definitionLabel = new TransparentBackgroundLabel(this.game, "", skin, "default_label");
-        definitionLabel.setFontScale(1.5f);
+        definitionLabel.setFontScale(0.6f);
         definitionLabel.setWrap(true);
-        table.row().width(0.6f * getWidth()).center().maxHeight(100).padBottom(25);
-        table.add(titleLabel);
-        table.row().width(0.7f * getWidth()).center().maxHeight(675);
-        table.add(definitionLabel);
+        definitionLabel.setAlignment(Align.center);
+
+        table.add(titleLabel).center().expand().width(getWidth() * 0.9f).padTop(70f).height(getHeight() * 0.10f);
+        table.row();
+        table.add(definitionLabel).center().top().expand().width(getWidth() * 0.9f).maxHeight(getHeight() * 0.7f).spaceBottom(150f);
         this.addActor(table);
     }
 

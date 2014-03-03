@@ -28,9 +28,9 @@ public class TransparentBackgroundLabel extends Label {
     @Override
     public void draw(SpriteBatch batch, float delta) {
         // Use the shader to make the black background transparent
-        batch.setShader(shader);
+        // batch.setShader(shader);
         super.draw(batch, delta);
-        batch.setShader(null);
+        // batch.setShader(null);
     }
 
 
