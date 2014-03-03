@@ -49,7 +49,7 @@ public class WordMarqueeActor extends Group {
 
         skin = game.skin;
 
-        textLabel = new TransparentBackgroundLabel(this.game, "", skin, "default_label");
+        textLabel = new TransparentBackgroundLabel(this.game, "Nothing here", skin, "default_label");
         textLabel.setFontScale(1.0f);
         addActor(textLabel);
         initNewLabel();

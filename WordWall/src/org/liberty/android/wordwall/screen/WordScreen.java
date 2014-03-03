@@ -16,7 +16,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
@@ -100,12 +99,12 @@ public class WordScreen implements Screen {
     }
 
     @Override
-    public void pause() {
+    public void resume() {
         timer.start();
     }
 
     @Override
-    public void resume() {
+    public void pause() {
         timer.stop();
     }
 
