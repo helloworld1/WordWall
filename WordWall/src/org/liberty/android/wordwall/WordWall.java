@@ -63,9 +63,10 @@ public class WordWall extends Game {
         assetManager = new AssetManager();
         assetManager.setLoader(ShaderProgram.class, new ShaderAssetLoader(new InternalFileHandleResolver()));
 
-        // The droid sans fallback font.
-        // It will also load fonts/dsf.etc1 texture as dependency
-        assetManager.load("fonts/dsf.fnt", BitmapFont.class);
+        // The serif font with its texture.
+        // It will also load fonts/serif.etc1 texture as dependency
+        // Note the font's texutre is specially crafted. The green component
+        // is actually alpha. Additional shader is used to convert it back
         assetManager.load("fonts/serif.fnt", BitmapFont.class);
 
         // The compress texture with left half color info and right half normal value

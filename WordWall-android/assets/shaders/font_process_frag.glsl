@@ -1,4 +1,6 @@
-// DO FXAA and add alpha to the ETC1 compressed texture
+// ETC1 compressed does not have alpha value. However the font
+// need alpha to display nicely. We bacially manually set the green
+// component of the image to alpha and here we convert it back to alpha
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -10,12 +12,13 @@ varying vec2 v_texCoord;
 
 void main()
 {
-    // For the etc1 texture font, the background should be transparent.
-    // However etc1 does not support alpha. This shader manually set the black color
-    // to transparent
     vec4 textureColor = texture2D(u_texture, v_texCoord);
-    if (textureColor.r <= 0.01 && textureColor.g <= 0.01 && textureColor.b <= 0.01) {
-        textureColor.a = 0.0;
-    }
+    // The font's r, g, b has the same value because it is grayscale.
+    // So just get the alpha from green and the rest are just the same
+    // as red component
+    textureColor.a = textureColor.g;
+    textureColor.g = textureColor.r;
+    textureColor.b = textureColor.r;
+
     gl_FragColor = v_color * textureColor;
 }
