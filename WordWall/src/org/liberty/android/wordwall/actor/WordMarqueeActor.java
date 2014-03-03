@@ -14,6 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * A scrolling text from right to left.
+ */
 public class WordMarqueeActor extends Group {
 
     public static final float INITIAL_ALPHA = 0.9f;
