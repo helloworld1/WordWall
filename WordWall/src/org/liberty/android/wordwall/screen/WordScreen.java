@@ -1,6 +1,5 @@
 package org.liberty.android.wordwall.screen;
 
-
 import org.liberty.android.wordwall.WordWall;
 import org.liberty.android.wordwall.actor.BackgroundActor;
 import org.liberty.android.wordwall.actor.WordBoxActor;
@@ -79,6 +78,11 @@ public class WordScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         stage.act(calibratedDelta);
         stage.draw();
+        // try {
+        //     Thread.sleep(1000 / 30);
+        // } catch (InterruptedException e) {
+        //     e.printStackTrace();
+        // }
     }
 
     @Override
