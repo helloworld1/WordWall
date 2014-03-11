@@ -72,6 +72,8 @@ public class WordWall extends Game {
         // The compress texture with left half color info and right half normal value
         // Used for normal mapping
         assetManager.load("images/wall_with_normal.etc1", Texture.class);
+        assetManager.load("images/red_with_normal.etc1", Texture.class);
+        assetManager.load("images/wood_with_normal.etc1", Texture.class);
 
         assetManager.load("shaders/font_process", ShaderProgram.class);
         assetManager.load("shaders/normalmap2d", ShaderProgram.class);
