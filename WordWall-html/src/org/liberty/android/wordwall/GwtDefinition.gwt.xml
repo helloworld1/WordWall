@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<module>
-    <entry-point class="org.liberty.android.wordwall.client.GwtLauncher"/>
-    <set-configuration-property name="gdx.assetpath" value="../WordWall-android/assets"/>
-    <inherits name="WordWall"/>
-    <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt"/>
-</module>
