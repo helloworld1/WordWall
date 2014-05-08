@@ -32,11 +32,19 @@ public class DatabasesListActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         Log.v(TAG, "onCreate: start");
         try {
-            String uri = "content://org.liberty.android.fantastischmemo.databasesprovider";
-            mCursor = getContentResolver().query(Uri.parse(uri), null, null,
+            String proUri = "content://org.liberty.android.fantastischmemopro.databasesprovider";
+            String freeUri = "content://org.liberty.android.fantastischmemopro.databasesprovider";
+
+            mCursor = getContentResolver().query(Uri.parse(proUri), null, null,
                     null, null);
             if (mCursor == null) {
-                Log.v(TAG, "Null cursor found");
+                Log.v(TAG, "Content provider not found: " + proUri);
+                Log.v(TAG, "Trying: " + freeUri);
+                mCursor = getContentResolver().query(Uri.parse(freeUri), null, null,
+                        null, null);
+            }
+            if (mCursor == null) {
+                Log.v(TAG, "Content provider not found: " + freeUri);
                 showAlertDialog();
                 return;
             }

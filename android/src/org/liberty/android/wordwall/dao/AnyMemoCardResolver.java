@@ -18,7 +18,8 @@ import android.util.Log;
  * 
  */
 public class AnyMemoCardResolver implements CardResolver {
-    private static String AUTHROITY = "org.liberty.android.fantastischmemo.cardprovider";
+    private static String FREE_AUTHROITY = "org.liberty.android.fantastischmemo.cardprovider";
+    private static String PRO_AUTHROITY = "org.liberty.android.fantastischmemopro.cardprovider";
     private static String TAG = "AnyMemoProviderAdapter";
 
     private final Context mContext;
@@ -44,10 +45,20 @@ public class AnyMemoCardResolver implements CardResolver {
         String pathUri = Uri.encode(dbPath);
         Log.d(TAG, "PathUri = " + pathUri);
         try {
-            Cursor cursor = cr.query(
-                    Uri.parse("content://" + AUTHROITY + "/" + pathUri
-                            + "/random/50"), null, null, null, null);
-            if (cursor != null) {
+            Uri proUri = Uri.parse("content://" + PRO_AUTHROITY + "/" + pathUri + "/random/50");
+            Uri freeUri = Uri.parse("content://" + FREE_AUTHROITY + "/" + pathUri + "/random/50");
+
+            // First trying pro uri
+            Cursor cursor = cr.query(proUri, null, null, null, null);
+            if (cursor == null) {
+                Log.i(TAG, "Content provider not found: " + proUri);
+                Log.i(TAG, "trying: " + freeUri);
+                cursor = cr.query(freeUri, null, null, null, null);
+            }
+            if (cursor == null) {
+                Log.i(TAG, "Content provider not found: " + freeUri);
+
+            } else {
                 cursor.moveToFirst();
                 while (!cursor.isAfterLast()) {
                     String question = cursor.getString(cursor
@@ -63,19 +74,5 @@ public class AnyMemoCardResolver implements CardResolver {
             Log.e(TAG, "Error when loading cards.");
         }
         return cards;
-    }
-
-    private boolean contentProviderExist(String uriString) {
-        Uri providerUri = Uri.parse(uriString);
-        try {
-            Cursor cursor = mContext.getContentResolver().query(providerUri,
-                    null, null, null, null);
-            if (cursor != null) {
-                return true;
-            }
-            return false;
-        } catch (Exception e) {
-            return false;
-        }
     }
 }

@@ -1,6 +1,5 @@
 package org.liberty.android.wordwall.util;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.ArrayMap;
 
 /**
@@ -89,7 +88,6 @@ public class GameTimer {
             float timeToRun = taskStartTimeMap.get(task);
 
             if (currentTime >= timeToRun) {
-                Gdx.app.log("AA", "AAAAAAAAAAAAAAAAAAAAAA");
                 task.run();
                 taskStartTimeMap.removeKey(task);
                 // If the task has interval
