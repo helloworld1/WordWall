@@ -32,7 +32,7 @@
     <string name="daydream_card_header">Set up daydream</string>
     <string name="daydream_card_text">This will launch the daydream settings in Android. Please check "WordWall" in the list. You can use "Start now" to preview.</string>
     <string name="livewallpaper_card_header">Set up livewallpaper</string>
-    <string name="livewallpaper_card_text">This will launch the display settings in Android. Please choose "Wallpaper" and then "Live Wallpapers" and select "WordWall".</string>
+    <string name="livewallpaper_card_text">This will launch the live wallpaper settings in Android. Please choose "WordWall". Note, live wallpaper will consume considerable amount of battery when the wallpaper is visible.</string>
     <string name="preview_card_header">Preview WordWall</string>
     <string name="preview_card_text">This will display a preview to what will actually be shown in daydream or live wallpaper. You can use this function to test settings.</string>
     <string name="settings_card_header">Configure WordWall</string>
