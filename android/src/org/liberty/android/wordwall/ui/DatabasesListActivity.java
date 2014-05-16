@@ -33,7 +33,7 @@ public class DatabasesListActivity extends ListActivity {
         Log.v(TAG, "onCreate: start");
         try {
             String proUri = "content://org.liberty.android.fantastischmemopro.databasesprovider";
-            String freeUri = "content://org.liberty.android.fantastischmemopro.databasesprovider";
+            String freeUri = "content://org.liberty.android.fantastischmemo.databasesprovider";
 
             mCursor = getContentResolver().query(Uri.parse(proUri), null, null,
                     null, null);
