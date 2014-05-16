@@ -81,13 +81,11 @@ public class WordScreen implements Screen {
 
     @Override
     public void show() {
-        // Not inplemented
         timer.start();
     }
 
     @Override
     public void hide() {
-        // Not inplemented
         timer.stop();
     }
 
@@ -104,6 +102,7 @@ public class WordScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+        timer.stop();
     }
 
     /**
@@ -153,7 +152,6 @@ public class WordScreen implements Screen {
      * Set up the timers for the actors to initialize.
      */
     private void initActorTimers() {
-
         for (int i = 0; i < wordMarqueeActors.size; i++) {
             final int n = i;
             timer.schedule(new Runnable() {

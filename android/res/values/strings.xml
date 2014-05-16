@@ -29,4 +29,14 @@
     <string name="preview_text">Preview</string>
     <string name="force_close_text">Force close</string>
     <string name="force_close_dialog_message">Warning: you will force close all WordWall processes including the livewallpaper and daydream.</string>
+    <string name="daydream_card_header">Set up daydream</string>
+    <string name="daydream_card_text">This will launch the daydream settings in Android. Please check "WordWall" in the list. You can use "Start now" to preview.</string>
+    <string name="livewallpaper_card_header">Set up livewallpaper</string>
+    <string name="livewallpaper_card_text">This will launch the display settings in Android. Please choose "Wallpaper" and then "Live Wallpapers" and select "WordWall".</string>
+    <string name="preview_card_header">Preview WordWall</string>
+    <string name="preview_card_text">This will display a preview to what will actually be shown in daydream or live wallpaper. You can use this function to test settings.</string>
+    <string name="settings_card_header">Configure WordWall</string>
+    <string name="settings_card_text">You can choose your AnyMemo card db to be shown in WordWall. Also you can customize WordWall in different ways.</string>
+
+
 </resources>

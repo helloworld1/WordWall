@@ -52,6 +52,8 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
+
+        compile 'com.github.gabrielemariotti.cards:library:1.6.0'
     }
 }
 
