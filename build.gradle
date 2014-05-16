@@ -54,6 +54,8 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
 
         compile 'com.github.gabrielemariotti.cards:library:1.6.0'
+        compile 'com.github.gabrielemariotti.cards:library-extra:1.6.0'
+        compile 'com.nhaarman.listviewanimations:library:2.6.0'
     }
 }
 

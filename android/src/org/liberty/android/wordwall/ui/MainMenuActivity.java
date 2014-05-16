@@ -4,6 +4,9 @@ import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardArrayAdapter;
 import it.gmariotti.cardslib.library.view.CardListView;
 
+import com.nhaarman.listviewanimations.swinginadapters.prepared.SwingRightInAnimationAdapter;
+import com.nhaarman.listviewanimations.swinginadapters.AnimationAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +51,13 @@ public class MainMenuActivity extends Activity {
         cards.add(settingsCard);
         cards.add(daydreamCard);
         cards.add(livewallpaperCard);
+
         CardArrayAdapter cardArrayAdapter = new CardArrayAdapter(this, cards);
-        cardListView.setAdapter(cardArrayAdapter);
+        AnimationAdapter animCardArrayAdapter = new SwingRightInAnimationAdapter(cardArrayAdapter);
+
+        animCardArrayAdapter.setAbsListView(cardListView);
+        //cardListView.setAdapter(cardArrayAdapter);
+        cardListView.setExternalAdapter(animCardArrayAdapter,cardArrayAdapter);
     }
 }
 
