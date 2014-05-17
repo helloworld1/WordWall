@@ -12,13 +12,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Log;
 
 public class DatabasesListActivity extends ListActivity {
     private static final String TAG = "DatabaseListActivity";
@@ -30,7 +30,6 @@ public class DatabasesListActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.v(TAG, "onCreate: start");
         try {
             String proUri = "content://org.liberty.android.fantastischmemopro.databasesprovider";
             String freeUri = "content://org.liberty.android.fantastischmemo.databasesprovider";
@@ -59,7 +58,6 @@ public class DatabasesListActivity extends ListActivity {
             Log.e(TAG, "AnyMemo not available");
             showAlertDialog();
         }
-        Log.v(TAG, "onCreate: end");
     }
 
     @Override
@@ -82,7 +80,6 @@ public class DatabasesListActivity extends ListActivity {
     }
 
     private void showAlertDialog() {
-        Log.v(TAG, "showAlertDialog start");
         View alertView = View.inflate(DatabasesListActivity.this,
                 R.layout.link_alert, null);
         TextView textView = (TextView) alertView
@@ -112,6 +109,5 @@ public class DatabasesListActivity extends ListActivity {
                                 finish();
                             }
                         }).create().show();
-        Log.v(TAG, "showAlertDialog end");
     }
 }
