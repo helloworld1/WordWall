@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:key="settings_UI"
-    android:title="@string/settings_UI_title" >
+    android:title="@string/settings_UI_title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
         <Preference
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:key="dbName"
             android:summary="@string/database_summary"
             android:title="@string/database"

@@ -19,9 +19,7 @@ public class SettingsUI extends PreferenceActivity {
 
     public static final String EXTRA_DB_NAME = "dbName";
 
-    private static final String DEFAULT_FILEBROWSER_ROOT = "/sdcard/anymemo/";
     private static final int RESULT_CODE = 500;
-
 
     private Preference mDataSourcePreference;
     public static final String DEFAULT_DATA_SOURCE = "french-body-parts.db";
