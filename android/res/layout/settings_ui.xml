@@ -5,13 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-        <Preference
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:key="dbName"
-            android:summary="@string/database_summary"
-            android:title="@string/database"
-            android:persistent="true"
-            android:defaultValue="/sdcard/anymemo/french-body-parts.db"/>
+    <Preference
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:key="dbName"
+        android:summary="@string/database_summary"
+        android:title="@string/database"
+        android:persistent="true"
+        android:defaultValue="/sdcard/anymemo/french-body-parts.db"/>
 
+    <ListPreference
+        android:title="@string/select_background_text"
+        android:summary="@string/select_background_summary"
+        android:key="selected_background"
+        android:defaultValue="red"
+        android:entries="@array/background_entries"
+        android:entryValues="@array/background_entries_value" />
 </PreferenceScreen>

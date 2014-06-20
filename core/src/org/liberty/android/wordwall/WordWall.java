@@ -5,10 +5,13 @@ import java.util.List;
 
 import org.liberty.android.wordwall.dao.CardResolver;
 import org.liberty.android.wordwall.dao.OnCardResolverChangedListener;
+import org.liberty.android.wordwall.dao.OnSettingsChangedListener;
+import org.liberty.android.wordwall.dao.SettingsResolver;
 import org.liberty.android.wordwall.screen.LoadingScreen;
 import org.liberty.android.wordwall.util.ShaderAssetLoader;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Texture;
@@ -43,13 +46,18 @@ public class WordWall extends Game {
     /** Used to retrieve cards. */
     public CardResolver cardResolver;
 
+    public final SettingsResolver settingsResolver;
+
     /** Will be loaded after the assets are loaded in loading screen */
     public Skin skin = null;
 
     private List<OnCardResolverChangedListener> onCardResolverChangedListeners = new ArrayList<OnCardResolverChangedListener>(3);
 
-    public WordWall(CardResolver cardResolver) {
+    private List<OnSettingsChangedListener> onSettingsChangedListeners = new ArrayList<OnSettingsChangedListener>(3);
+
+    public WordWall(CardResolver cardResolver, SettingsResolver settingsResolver) {
         this.cardResolver = cardResolver;
+        this.settingsResolver = settingsResolver;
     }
 
     @Override
@@ -73,7 +81,6 @@ public class WordWall extends Game {
         // Used for normal mapping
         assetManager.load("images/wall_with_normal.etc1", Texture.class);
         assetManager.load("images/red_with_normal.etc1", Texture.class);
-        assetManager.load("images/red_with_normal.png", Texture.class);
         assetManager.load("images/wood_with_normal.etc1", Texture.class);
 
         assetManager.load("shaders/font_process", ShaderProgram.class);
@@ -96,6 +103,16 @@ public class WordWall extends Game {
     }
 
     /**
+     * Notify the listeners that the settings has changed.
+     */
+    public void notifySettingsChanged() {
+        Gdx.app.log("WordWall", "Received settings change notification");
+        for (OnSettingsChangedListener listener : onSettingsChangedListeners) {
+            listener.onSettingsChanged();
+        }
+    }
+
+    /**
      * Register a resolver changed listener so when the card resolver changed, the listener
      * will be notified.
      *
@@ -103,6 +120,29 @@ public class WordWall extends Game {
      */
     public void registerOnCardResolverChangedListener(OnCardResolverChangedListener listener) {
         onCardResolverChangedListeners.add(listener);
+    }
+
+    /**
+     * Unregister a card resolve changed listener.
+     *
+     * @param listener the listener to unregister.
+     */
+    public void unregisterOnCardResolverChangedListener(OnCardResolverChangedListener listener) {
+        onCardResolverChangedListeners.remove(listener);
+    }
+
+    /**
+     * Register listener for settings change.
+     */
+    public void registerOnSettingsChangedListener(OnSettingsChangedListener listener) {
+        onSettingsChangedListeners.add(listener);
+    }
+
+    /**
+     * Unregister a settings changed listener.
+     */
+    public void unregisterOnSettingsChangedListener(OnSettingsChangedListener listener) {
+        onSettingsChangedListeners.remove(listener);
     }
 
     @Override

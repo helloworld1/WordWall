@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <string-array name="background_entries">
+        <item>red</item>
+        <item>gray</item>
+        <item>wood</item>
+    </string-array>
+
+    <string-array name="background_entries_value">
+        <item>images/red_with_normal.etc1</item>
+        <item>images/wall_with_normal.etc1</item>
+        <item>images/wood_with_normal.etc1</item>
+    </string-array>
+</resources>

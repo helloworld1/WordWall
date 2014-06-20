@@ -7,21 +7,31 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class SettingsUI extends PreferenceActivity {
+
     public static final String DB_NAME_KEY = "dbName";
+
+    public static final String SELECTED_BACKGROUND_KEY = "selected_background";
 
     public static final String ACTION_DB_CHANGED = "actionDbChanged";
 
+    public static final String ACTION_SETTINGS_CHANGED = "actionSettingsChanged";
+
     public static final String EXTRA_DB_NAME = "dbName";
 
-    private static final int RESULT_CODE = 500;
+    private static final int ACTIVITY_DB = 1;
 
     private Preference mDataSourcePreference;
+
+    private ListPreference backgroundPreference;
+
     public static final String DEFAULT_DATA_SOURCE = "french-body-parts.db";
 
     private static final String TAG = "SettingsUI";
@@ -33,8 +43,28 @@ public class SettingsUI extends PreferenceActivity {
         addPreferencesFromResource(R.layout.settings_ui);
 
         mDataSourcePreference = findPreference(DB_NAME_KEY);
+
         mDataSourcePreference
                 .setOnPreferenceClickListener(dataSourcePreferenceOnClickListener);
+
+        backgroundPreference = (ListPreference) findPreference(SELECTED_BACKGROUND_KEY);
+        backgroundPreference
+            .setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+
+                @Override
+                public boolean onPreferenceChange(Preference preference,
+                        Object newValue) {
+                    Log.v(TAG, "Preference changed!");
+                    if (newValue != null) {
+                        Intent intent = new Intent();
+                        intent.setAction(ACTION_SETTINGS_CHANGED);
+                        sendBroadcast(intent);
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+        });
 
         SharedPreferences settings = PreferenceManager
                 .getDefaultSharedPreferences(this);
@@ -52,7 +82,7 @@ public class SettingsUI extends PreferenceActivity {
             Intent intent = new Intent(SettingsUI.this,
                     DatabasesListActivity.class);
             Log.v(TAG, "Before start FileBrowser");
-            startActivityForResult(intent, RESULT_CODE);
+            startActivityForResult(intent, ACTIVITY_DB);
             Log.v(TAG, "After start FileBrowser");
             return true;
         }
@@ -67,7 +97,7 @@ public class SettingsUI extends PreferenceActivity {
             return;
         }
 
-        if (requestCode == RESULT_CODE) {
+        if (requestCode == ACTIVITY_DB) {
             String mPreferenceValueDataSource = data
                     .getStringExtra(DatabasesListActivity.EXTRA_DB_NAME);
             PreferenceManager

@@ -1,8 +1,10 @@
 package org.liberty.android.wordwall;
 
+import org.liberty.android.wordwall.dao.AndroidSettingsResolver;
 import org.liberty.android.wordwall.dao.AnyMemoCardResolver;
 import org.liberty.android.wordwall.dao.CardResolver;
 import org.liberty.android.wordwall.dao.CardResolverMultiplexer;
+import org.liberty.android.wordwall.dao.SettingsResolver;
 import org.liberty.android.wordwall.dao.TutorialCardResolver;
 import org.liberty.android.wordwall.ui.SettingsUI;
 
@@ -29,8 +31,11 @@ public class Daydream extends AndroidDaydream {
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         
         String dbName = PreferenceManager.getDefaultSharedPreferences(this).getString(SettingsUI.DB_NAME_KEY, "");
-        CardResolver resolver = new CardResolverMultiplexer(new AnyMemoCardResolver(this, dbName), new TutorialCardResolver());
-        game = new WordWall(resolver);
+
+        CardResolver cardResolver = new CardResolverMultiplexer(new AnyMemoCardResolver(this, dbName), new TutorialCardResolver());
+        SettingsResolver settingsResolver = new AndroidSettingsResolver(this);
+        game = new WordWall(cardResolver, settingsResolver);
+
         initialize(game, cfg);
     }
 
@@ -40,6 +45,7 @@ public class Daydream extends AndroidDaydream {
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(SettingsUI.ACTION_DB_CHANGED);
+        filter.addAction(SettingsUI.ACTION_SETTINGS_CHANGED);
         registerReceiver(serviceEventListener, filter);
     }
 
@@ -62,6 +68,10 @@ public class Daydream extends AndroidDaydream {
                 CardResolver resolver = new CardResolverMultiplexer(new AnyMemoCardResolver(Daydream.this, dbName), new TutorialCardResolver());
                 game.setCardResolver(resolver);
 
+            }
+
+            if (action.equals(SettingsUI.ACTION_SETTINGS_CHANGED)) {
+                game.notifySettingsChanged();
             }
         }
     };

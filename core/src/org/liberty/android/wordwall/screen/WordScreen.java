@@ -4,6 +4,7 @@ import org.liberty.android.wordwall.WordWall;
 import org.liberty.android.wordwall.actor.BackgroundActor;
 import org.liberty.android.wordwall.actor.WordBoxActor;
 import org.liberty.android.wordwall.actor.WordMarqueeActor;
+import org.liberty.android.wordwall.dao.OnSettingsChangedListener;
 import org.liberty.android.wordwall.model.Card;
 import org.liberty.android.wordwall.util.GameTimer;
 
@@ -37,7 +38,22 @@ public class WordScreen implements Screen {
 
     private GameTimer timer;
 
-    public WordScreen(WordWall game) {
+    /**
+     * This is registered to the game so when the settings are changed the whole screen is refreshed.
+     */
+    private OnSettingsChangedListener onSettingsChangedListener = new OnSettingsChangedListener() {
+        @Override
+        public void onSettingsChanged() {
+            Gdx.app.postRunnable(new Runnable() {
+                public void run() {
+                    game.setScreen(new WordScreen(game));
+                    dispose();
+                }
+            });
+        }
+    };
+
+    public WordScreen(final WordWall game) {
         this.game = game;
 
         timer = new GameTimer();
@@ -58,6 +74,8 @@ public class WordScreen implements Screen {
         initActorTimers();
 
         Gdx.input.setInputProcessor(stage);
+
+        game.registerOnSettingsChangedListener(onSettingsChangedListener);
     }
 
     @Override
@@ -103,6 +121,7 @@ public class WordScreen implements Screen {
     public void dispose() {
         stage.dispose();
         timer.stop();
+        game.unregisterOnSettingsChangedListener(onSettingsChangedListener);
     }
 
     /**

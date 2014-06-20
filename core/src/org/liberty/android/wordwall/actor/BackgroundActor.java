@@ -30,7 +30,10 @@ public class BackgroundActor extends Actor {
 
     public BackgroundActor(WordWall game) {
         this.game = game;
-        wallTexture = game.assetManager.get("images/red_with_normal.etc1", Texture.class);
+
+        String backgroundTextureLocation = game.settingsResolver.getBackgroundImage();
+
+        wallTexture = game.assetManager.get(backgroundTextureLocation, Texture.class);
         shader = game.assetManager.get("shaders/normalmap2d");
 
         this.lightX = game.viewportWidth / 2;
