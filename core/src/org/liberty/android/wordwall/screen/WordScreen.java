@@ -46,7 +46,7 @@ public class WordScreen implements Screen {
         public void onSettingsChanged() {
             Gdx.app.postRunnable(new Runnable() {
                 public void run() {
-                    game.setScreen(new WordScreen(game));
+                    game.setScreen(new LoadingScreen(game));
                     dispose();
                 }
             });
