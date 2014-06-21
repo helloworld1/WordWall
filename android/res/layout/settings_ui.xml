@@ -18,7 +18,6 @@
         android:title="@string/select_background_text"
         android:summary="@string/select_background_summary"
         android:key="selected_background"
-        android:defaultValue="red"
         android:entries="@array/background_entries"
         android:entryValues="@array/background_entries_value" />
 </PreferenceScreen>
